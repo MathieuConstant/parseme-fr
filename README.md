@@ -1,10 +1,10 @@
 # parseme-fr
 
-This repository includes some code developed for the ANR project PARSEME-FR.
+This repository includes some code developed for the ANR project PARSEME-FR devoted to multiword expressions (MWE) and parsing.
 
 ## Lexicon creation
 
-Some code to generate some lexical entries in latex format. 
+In the directory lex, you can find some code to generate examples of lexical entries of MWEs in latex format. 
 
 Commands to execute the code:
 
