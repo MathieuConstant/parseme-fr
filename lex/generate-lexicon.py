@@ -1,9 +1,30 @@
 from mwe import *
 from entryfactory import *
+from lg import *
+
+def generateAbandonnerASonSortEntry(): 
+    e = entry('abandonner-a-son-sort-1')
+    #author,date,changetype,description,entrynodeid
+
+    ch = change('Mathieu Constant','20/09/2017','semi-auto','No url provided for description of the procedure','abandonnerasonsort.entry')
+    ch2 = change('Agata Savary','22/09/2017','manual','No url','abandonner@v')
+    s = generateAbandonnerASonSort()
+    e.addTree(s)
+    e.addChange(ch)
+    e.addChange(ch2)
+    e.addProperty('mwetype','id')
+    e.addProperty('mwepos','verb')
+    criteria = feats()
+    e.addFsProperty('criteria',criteria)
+    criteria.addStrFeat('CRAN','false')
+    criteria.addStrFeat('ZERO','false')
+    criteria.addStrFeat('LEX','true')
+    return e
+
 
 
 def generateAbandonnerASonSort():
-  #e = entry('abandonner-a-son-sort-1')
+  e = entry('abandonner-a-son-sort-1')
   #print(e)
 
   s = createNode('idtest',cat='id',const='SENT')
@@ -84,7 +105,6 @@ def generateAvoirBesoin():
 def generateAvoirBesoinEntry():
     e = entry('avoirbesoin.entry')
     #author,date,changetype,description,entrynodeid
-
     ch = change('Mathieu Constant','20/09/2017','semi-auto','No url provided for description of the procedure','avoirbesoin.entry')
     ch2 = change('Agata Savary','22/09/2017','manual','No url','besoin@n')
     s = generateAvoirBesoin()
@@ -101,7 +121,60 @@ def generateAvoirBesoinEntry():
 
 
 
-def generateLatex(entry):
+
+def generateC1GPNTemplateTree(): 
+   s = createNode('c1pgn',const='SENT')
+   
+   n0 = createNode('or0',logical=OR)
+   s.addChild(n0)
+     
+
+
+
+   vp = createNode('vp',const='VP')
+   s.addChild(vp)
+   verb= createNode('avoir@v',pos='VERB',lemma='avoir')
+   vp.addChild(verb)
+   
+   n1=createNode('n1',const='NP',func='obj')
+   s.addChild(n1)
+   
+
+
+
+   return s
+
+
+
+def generateC1GPNTemplateEntry():
+    e = entry('avoirbesoin.entry')
+    #author,date,changetype,description,entrynodeid
+    ch = change('Mathieu Constant','10/10/2017','MANUAL','No url provided for description of the procedure','avoirbesoin.entry')
+    e.addChange(ch) 
+    e.addProperty('mwetype','ID')
+    e.addProperty('mwepos','verb')
+  
+    return e
+
+
+
+
+
+def generateFromLG(table):
+   lgtable = lg(table,None)
+    
+   lgtable.load_lg("/Users/mconstant/Documents/work/research/data/lex/lg/tables-3.4/figees/C_c1gpn.lgt.csv")
+    
+
+
+
+
+
+
+
+
+
+def generateLatex(entries):
   s = ''
   s+='\\documentclass[8pt,landscape,a3]{amsart}\n'
   s+='\\usepackage[utf8]{inputenc}\n'
@@ -118,14 +191,15 @@ def generateLatex(entry):
 
 
   s+='\\begin{document}\n'
-  s+=entry.toTex()+'\n'
+  for entry in entries:
+     s+=entry.toTex()+'\n\n'
   s+='\\end{document}\n'
   return s
  
 
 
-s=generateAbandonnerASonSort()
-s=generateAvoirBesoinEntry()
-print(generateLatex(s))
+s0=generateAbandonnerASonSortEntry()
+s1=generateAvoirBesoinEntry()
+print(generateLatex([s0,s1]))
 
-
+#generateFromLG('test')
